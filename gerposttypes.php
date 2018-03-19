@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Plugin Name: Posttype
+ * Plugin Name: GERPosttype
  * Description: Some post type plugin
  * Version: 0.1
  * Author: Gerwin
@@ -12,17 +12,22 @@
 function my_custom_posttypes()
 {
     generate_custom_post_type('Reviews', 'Review', array(
-            'menu_icon' => 'dashicons-star-half',
+            'menu_icon'  => 'dashicons-star-half',
             'taxonomies' => array('category', 'post_tag'),
         )
     );
 
     generate_custom_post_type('Testimonials', 'Testimonial', array(
             'menu_icon' => 'dashicons-format-status',
+            'supports'  => array('tile', 'editor', 'thumbnail', 'author', 'excerpt', 'comments'),
         )
     );
 }
 add_action('init', 'my_custom_posttypes');
+
+/**
+ * 
+ */
 
 function my_rewrite_flush()
 {
@@ -30,7 +35,6 @@ function my_rewrite_flush()
     flush_rewrite_rules();
 }
 register_activation_hook(__FILE__, 'my_rewrite_flush');
-
 
 function generate_custom_post_type($name, $singular, $args = array())
 {

@@ -105,14 +105,16 @@ function generate_custom_taxonomy($name, $object_type = array(), $args = array()
 {
     $plural_name = array_key_exists('plural_name', $args) ? $args['plural_name'] : $name . 's';
     $lower_case_name = strtolower(preg_replace("/[^\w]+/", "-", $name));
+    $hierarchical = array_key_exists('hierarchical', $args) ? $args['hierarchical'] : true;
+
 
     $labels = array(
         'name' => 'Type of '. $plural_name,
         'singular_name' => 'Type of '. $name,
         'search_items' => 'Search Types of '. $plural_name,
         'all_items' => 'All Types of '. $plural_name,
-        'parent_item' => 'Parent Type of '. $name,
-        'parent_item_colon' => 'Parent Type of '. $name .':',
+        'parent_item' => $hierarchical ? 'Parent Type of '. $name : null,
+        'parent_item_colon' => $hierarchical ? 'Parent Type of '. $name .':' : null,
         'edit_item' => 'Edit Type of '. $name,
         'update_item' => 'Update Type of '. $name,
         'add_new_item' => 'Add New Type of '. $name,
@@ -122,7 +124,7 @@ function generate_custom_taxonomy($name, $object_type = array(), $args = array()
 
     $arguments = array(
         'labels' => $labels,
-        'hierarchical' => array_key_exists('hierarchical', $args) ? $args['hierarchical'] : true,
+        'hierarchical' => $hierarchical,
         'show_ui' => array_key_exists('show_ui', $args) ? $args['show_ui'] : true,
         'show_admin_column' => array_key_exists('show_admin_column', $args) ? $args['show_admin_column'] : true,
         'query_var' => array_key_exists('query_var', $args) ? $args['query_var'] : true,
